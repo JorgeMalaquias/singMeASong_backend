@@ -10,3 +10,5 @@ CREATE TABLE "recommendations" (
 
 -- CreateIndex
 CREATE UNIQUE INDEX "recommendations_name_key" ON "recommendations"("name");
+
+INSERT INTO "recommendations" ("name","youtubeLink") VALUES ('Nightmara','https://www.youtube.com/watch?v=94bGzWyHbu0');
