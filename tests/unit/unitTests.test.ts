@@ -170,7 +170,7 @@ describe('Testing the function getRandom from services', () => {
         expect(recommendation).toMatchObject(mockedReturn[0]);
     });
     it('Case in which there is no recommendation on the database',async()=>{
-        jest.spyOn(recommendationRepository,'findAll').mockImplementationOnce(():any=>{return []});
+        jest.spyOn(recommendationRepository,'findAll').mockImplementation(():any=>{return []});
 
         const promise = recommendationService.getRandom();
 
