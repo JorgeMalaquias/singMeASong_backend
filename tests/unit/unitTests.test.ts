@@ -157,17 +157,34 @@ describe('Testing the function downvote from services', () => {
         expect(recommendationRepository.remove).toBeCalled();
     });
 })
-
-
 describe('Testing the function getRandom from services', () => {
-    it.todo('Testing a case in which the funcion that gets the data from getByscore return an array bigger than length zero  and one of its element is returned randomly');
-    it.todo('Testing a case in which the funcion that gets the data from getByscore return an empty array and an error is thrown, to do that the function that throws the error must be mocked');
+    it('Case in which at least one recommendation is returned from repository',async()=>{
+        const mockedReturn = [
+            { name: 'Nightmare', youtubeLink: 'https://www.youtube.com/watch?v=94bGzWyHbu0' }];
+        jest.spyOn(recommendationRepository,'findAll').mockImplementationOnce(():any=>{return mockedReturn});
+
+        const recommendation = await recommendationService.getRandom();
+
+        expect(recommendationRepository.findAll).toBeCalled();
+        expect(recommendation).toMatchObject(mockedReturn[0]);
+    });
+    it('Case in which there is no recommendation on the database',async()=>{
+        jest.spyOn(recommendationRepository,'findAll').mockImplementationOnce(():any=>{return []});
+
+        const promise = recommendationService.getRandom();
+
+        expect(recommendationRepository.findAll).toBeCalled();
+        expect(promise).rejects.toEqual({
+            type: 'not_found',
+            message: ''
+        });
+    });
 })
 
 describe('Testing the function get from services', () => {
     it.todo('Testing if this function calls the function findAll from the repository, mocking that');
 })
-describe('Testing the function getById: getByIdOrFail from services', () => {
+describe('Testing the function getByIdOrFail from services', () => {
     it.todo('Testing if this function calls the function find from the repository, mocking that. In this case simulate that this function return some object and then this is returned');
     it.todo('Testing if this function calls the function find from the repository, mocking that. In this case simulate that this function does not return any object and then an error is thrown');
     it.todo('');
