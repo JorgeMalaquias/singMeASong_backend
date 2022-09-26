@@ -1,10 +1,11 @@
+
+
 import { jest } from '@jest/globals';
 import * as errorUtils from '../../src/utils/errorUtils';
 import { recommendationRepository } from '../../src/repositories/recommendationRepository';
 import { recommendationService } from '../../src/services/recommendationsService';
 
 import {prisma} from "../../src/database"
-import { not } from 'joi';
 
 const newRecommendation = {
     name: 'what i ve done',
@@ -75,7 +76,7 @@ describe('Testing the function insert from services', () => {
     });
     //pay attention to the format of the parameter data
 })
-
+/*
 describe('Testing the function upvote from services', () => {
     it('Case in which the upvote goes well ', async ()=>{
         const obj = newRecommendation;
@@ -181,15 +182,48 @@ describe('Testing the function getRandom from services', () => {
     });
 })
 
+
 describe('Testing the function get from services', () => {
-    it.todo('Testing if this function calls the function findAll from the repository, mocking that');
+    it('Testing if this function calls the function findAll from the repository, mocking that',async()=>{
+        const mockedReturn = [
+            { name: 'Nightmare', youtubeLink: 'https://www.youtube.com/watch?v=94bGzWyHbu0' },
+            { name: 'Hail To The King', youtubeLink: 'https://www.youtube.com/watch?v=DelhLppPSxY' },
+            { name: 'Highway to Hell', youtubeLink: 'https://www.youtube.com/watch?v=l482T0yNkeo' }];
+        jest.spyOn(recommendationRepository,'findAll').mockImplementationOnce(():any=>{return mockedReturn});
+        await recommendationService.get();
+        expect(recommendationRepository.findAll).toBeCalled();
+    });
 })
+
+
+
 describe('Testing the function getByIdOrFail from services', () => {
-    it.todo('Testing if this function calls the function find from the repository, mocking that. In this case simulate that this function return some object and then this is returned');
-    it.todo('Testing if this function calls the function find from the repository, mocking that. In this case simulate that this function does not return any object and then an error is thrown');
-    it.todo('');
+    it('Testing if this function calls the function find from the repository, mocking that. In this case simulate that this function return some object and then this is returned',async()=>{
+        const obj = newRecommendation;
+        jest.spyOn(recommendationRepository,'find').mockImplementationOnce(():any=>{return {...obj,id:75}});
+        await recommendationService.getByIdOrFail(6);
+        expect(recommendationRepository.find).toBeCalled();
+    });
+    it('Testing if this function calls the function find from the repository, mocking that. In this case simulate that this function does not return any object and then an error is thrown',async()=>{
+        const obj = newRecommendation;
+        jest.spyOn(recommendationRepository,'find').mockImplementationOnce(():any=>{});
+        const promise = recommendationService.getByIdOrFail(6);
+        expect(recommendationRepository.find).toBeCalled();
+        expect(promise).rejects.toEqual({
+            type: 'not_found',
+            message: ''
+        });
+    });
 })
 
 describe('Testing the function getTop from services', () => {
-    it.todo('Testing if this function calls the function getAmountByScore from the repository, mocking that');
+    it('Testing if this function calls the function getAmountByScore from the repository, mocking that',async()=>{
+        const mockedReturn = [
+            { name: 'Nightmare', youtubeLink: 'https://www.youtube.com/watch?v=94bGzWyHbu0' }];
+        jest.spyOn(recommendationRepository,'getAmountByScore').mockImplementationOnce(():any=>{return mockedReturn});
+        await recommendationService.getTop(7);
+        expect(recommendationRepository.getAmountByScore).toBeCalled();
+    });
 })
+
+*/
