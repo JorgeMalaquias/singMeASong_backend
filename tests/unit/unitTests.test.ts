@@ -76,7 +76,7 @@ describe('Testing the function insert from services', () => {
     });
     //pay attention to the format of the parameter data
 })
-/*
+
 describe('Testing the function upvote from services', () => {
     it('Case in which the upvote goes well ', async ()=>{
         const obj = newRecommendation;
@@ -226,4 +226,3 @@ describe('Testing the function getTop from services', () => {
     });
 })
 
-*/
